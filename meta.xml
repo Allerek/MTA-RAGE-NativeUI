@@ -1,0 +1,47 @@
+<meta>
+  <info author="Allerek" type="script" name="MTA-V-Native-UI"/>
+  <script src="c_button.lua" type="client"/>
+  <script src="c_switch.lua" type="client"/>
+  <script src="c_checkbox.lua" type="client"/>
+  <script src="c_MTA-V-Native-UI.lua" type="client"/>
+  <script src="s_MTA-V-Native-UI.lua" type="server"/>
+  <script src="c_test.lua" type="client"/>
+  <file src="assets/fonts/SingPainter.ttf"/>
+  <file src="assets/fonts/ChaletLondon.ttf"/>
+  <file src="assets/24.png"/>
+  <file src="assets/defaultbg.png"/>
+  <file src="assets/change.wav"/>
+  <file src="assets/icons/accept1.png"/>
+  <file src="assets/icons/accept2.png"/>
+  <file src="assets/icons/ammo1.png"/>
+  <file src="assets/icons/ammo2.png"/>
+  <file src="assets/icons/armour1.png"/>
+  <file src="assets/icons/armour2.png"/>
+  <file src="assets/icons/art1.png"/>
+  <file src="assets/icons/art2.png"/>
+  <file src="assets/icons/barber1.png"/>
+  <file src="assets/icons/barber2.png"/>
+  <file src="assets/icons/box0.png"/>
+  <file src="assets/icons/box1.png"/>
+  <file src="assets/icons/box2.png"/>
+  <file src="assets/icons/clothing1.png"/>
+  <file src="assets/icons/clothing2.png"/>
+  <file src="assets/icons/shop_franklin_icon1.png"/>
+  <file src="assets/icons/shop_franklin_icon2.png"/>
+  <file src="assets/icons/shop_garage_bike_icon1.png"/>
+  <file src="assets/icons/shop_garage_bike_icon2.png"/>
+  <file src="assets/icons/shop_garage_icon1.png"/>
+  <file src="assets/icons/shop_garage_icon2.png"/>
+  <file src="assets/icons/shop_gunclub_icon1.png"/>
+  <file src="assets/icons/shop_gunclub_icon2.png"/>
+  <file src="assets/icons/shop_health_icon1.png"/>
+  <file src="assets/icons/shop_health_icon2.png"/>
+  <file src="assets/icons/shop_mask_icon1.png"/>
+  <file src="assets/icons/shop_mask_icon2.png"/>
+  <file src="assets/icons/shop_michael_icon1.png"/>
+  <file src="assets/icons/shop_michael_icon2.png"/>
+  <file src="assets/icons/shop_tattoos_icon1.png"/>
+  <file src="assets/icons/shop_tattoos_icon2.png"/>
+  <file src="assets/icons/shop_trevor_icon1.png"/>
+  <file src="assets/icons/shop_trevor_icon2.png"/>
+</meta>
