@@ -1,3 +1,12 @@
+--
+-- ----------------------------------------------------------------------------
+-- "THE BEER-WARE LICENSE" (Revision 42):
+-- <allerek22@icloud.com> wrote this file.  As long as you retain this notice you
+-- can do whatever you want with this stuff. If we meet some day, and you think
+-- this stuff is worth it, you can buy me a beer in return.  Mateusz Bartłomiej Domińczak
+-- ----------------------------------------------------------------------------
+--
+
 menus = {}
 
 local isNativeShown = false
