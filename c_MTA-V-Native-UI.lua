@@ -1,7 +1,7 @@
 menus = {}
 
 local isNativeShown = false
-local activeMenu = false
+activeMenu = false
 local activeItem =  1
 
 local sW,sH = guiGetScreenSize()
@@ -32,7 +32,7 @@ function createNativeUI(name, title, image, color, nameColor, titleColor, align,
         assert(tonumber(color), "Bad argument @ createNativeUI [expected color at argument 4,  got "..type(color).." '"..color.."'']")
     end
     if align then
-        assert(align == "left" or align == "right", "Invalid align type @ createNativeUI [expected 'left'/'right' at argument 7,  got"..type(align).." '"..tostring(align).."'']")
+        assert(align == "left" or align == "right" or align == "center", "Invalid align type @ createNativeUI [expected 'left'/'right' at argument 7,  got"..type(align).." '"..tostring(align).."'']")
     end
     if nameAlign then
         assert(nameAlign == "left" or nameAlign == "center" or nameAlign == "right","Invalid menu-align type @ createNativeUI [expected 'left'/'center'/'right' at argument 10,  got"..type(align).." '"..align.."'']")
@@ -48,10 +48,18 @@ function createNativeUI(name, title, image, color, nameColor, titleColor, align,
 
     local items = menus[menuElement].items
     local menu = menus[menuElement]
-    
+    if align == "left" then
+        windowPosition = Vector2(10*scale, 10*scale)
+    elseif align == "center" then
+        windowPosition = Vector2(sW/2-GUI.scale.bgImageScale.x/2, 10*scale)
+    elseif align == "right" then
+        windowPosition = Vector2(sW-GUI.scale.bgImageScale.x-10*scale, 10*scale)
+    end
+
+
     menu.name = name
     menu.title = title
-    menu.bgImagePos = Vector2(10*scale, 10*scale)
+    menu.bgImagePos = windowPosition
     menu.color = color or false
     menu.image = image or false
 
@@ -83,20 +91,58 @@ function createNativeUI(name, title, image, color, nameColor, titleColor, align,
     end
     menu.scroll_Items = scroll_Items
 
+    menu.visible = true
+    menu.activeItem = 1
+
     menus[menuElement] = menu
     menus[menuElement].items = items
 
     isNativeShown = true
 
     activeMenu = menuElement
-    activeItem = 1
-
+    
     bindKeys()
     return menuElement
 end
 
+function setNativeMenuVisible(menuElement, visible)
+    assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
+    for i,v in pairs(menus) do
+        if i == menuElement then
+            v.visible = visible
+        end
+    end
+end
+
+function setNativeMenuActive(menuElement)
+    assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
+    for i,v in pairs(menus) do
+        if i == menuElement then
+            activeMenu = i
+            bindKeys()
+        end
+    end
+end
+
+function destroyNativeMenu(menuElement)
+    assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
+    for i,v in pairs(menus) do
+        if i == menuElement then
+            menus[i] = nil
+            destroyElement(i)
+            unbindKeys()
+            return true
+        end
+    end
+    return false
+end
+
 addEventHandler("onClientRender", getRootElement(), function()
     for k,window in pairs(menus) do
+        if not window.visible then break end
         if not window.image then
             dxDrawRectangle(window.bgImagePos, GUI.scale.bgImageScale, window.color)
         else
@@ -110,7 +156,7 @@ addEventHandler("onClientRender", getRootElement(), function()
         dxDrawRectangle(window.titlePosition, GUI.scale.itemScale, tocolor(0, 0, 0))
         dxDrawText(window.title, window.titleTextPosition, nil, nil, window.titleColor, 1, window.titleFont, "left", "center")
         if window.counter then
-            dxDrawText(activeItem.."/"..#window.items, window.counterTextPosition, nil, nil, window.titleColor, 1, window.titleFont, "right", "center")
+            dxDrawText(window.activeItem.."/"..#window.items, window.counterTextPosition, nil, nil, window.titleColor, 1, window.titleFont, "right", "center")
         end
 
         for i,v in ipairs(window.items) do
@@ -121,7 +167,7 @@ addEventHandler("onClientRender", getRootElement(), function()
             if i > window.scroll_Items*(getCurrentNativePage()-1) and i <= window.scroll_Items*getCurrentNativePage() then   
 
                 i=i-window.scroll_Items*(getCurrentNativePage()-1)
-                if activeItem-window.scroll_Items*(getCurrentNativePage()-1) == i then
+                if window.activeItem-window.scroll_Items*(getCurrentNativePage()-1) == i then
                     color = tocolor(255, 255, 255, 255*0.6)
                     textcolor = tocolor(0, 0, 0, 255)
                 else
@@ -135,7 +181,7 @@ addEventHandler("onClientRender", getRootElement(), function()
                 dxDrawText(v.text, itemTextPosition, nil, nil, textcolor, 1, window.titleFont, "left", "center")
 
                 if v.type == "button" and v.icon then
-                    if i == activeItem then
+                    if i == window.activeItem then
                         imgType = 2
                     else
                         imgType = 1
@@ -146,7 +192,7 @@ addEventHandler("onClientRender", getRootElement(), function()
                     local itemSwitchTextPosition = Vector2(window.titlePosition.x+GUI.scale.itemScale.x-15, itemPosition.y+GUI.scale.itemScale.y/2)
                     dxDrawText("⮜ "..v.values[tonumber(v.currentPosition)].." ⮞", itemSwitchTextPosition, nil, nil, textColor, 1, window.titleFont, "right", "center")
                 elseif v.type == "checkbox" then
-                    if i == activeItem then
+                    if i == window.activeItem then
                         imgType = 2
                     else
                         imgType = 1
@@ -168,9 +214,9 @@ addEventHandler("onClientRender", getRootElement(), function()
                     local arrowsBgPosition = Vector2(window.bgImagePos.x, window.titlePosition.y+GUI.scale.itemScale.y*(itemsOnPage+1))
                     dxDrawRectangle(arrowsBgPosition, GUI.scale.itemScale, tocolor(0, 0, 0, 255*0.4))
                     local arrowsPosition = Vector2(window.bgImagePos.x+GUI.scale.itemScale.x/2, arrowsBgPosition.y+GUI.scale.itemScale.y/2)
-                    if activeItem == 1 then
+                    if window.activeItem == 1 then
                         text = "⮟"
-                    elseif activeItem == #menus[activeMenu].items+1 then
+                    elseif window.activeItem == #menus[activeMenu].items+1 then
                         text = "⮝"
                     else
                         text = "⮝ \ ⮟"
@@ -206,87 +252,109 @@ function playNativeSound()
     sound = playSound("assets/change.wav", false)
 end
 
+
+function nativeArrowUp()
+    if not isNativeShown then return end
+    if #menus[activeMenu].items+1 == 1 then return end
+    if menus[activeMenu].activeItem+1 > #menus[activeMenu].items then
+        menus[activeMenu].activeItem = 1
+    else
+        menus[activeMenu].activeItem = menus[activeMenu].activeItem+1
+    end
+    playNativeSound()
+end
+
+function nativeArrowDown()
+    if not isNativeShown then return end
+    if #menus[activeMenu].items+1 == 0 then return end
+    if menus[activeMenu].activeItem-1 < 1 then
+        menus[activeMenu].activeItem = #menus[activeMenu].items
+    else
+        menus[activeMenu].activeItem = menus[activeMenu].activeItem-1
+    end
+    playNativeSound()
+end
+
+function nativeArrowRight()
+    if not isNativeShown then return end
+    if #menus[activeMenu].items == 0 then return end
+    
+    if menus[activeMenu].items[menus[activeMenu].activeItem].type == "switch" then
+        local activeSwitch = menus[activeMenu].items[menus[activeMenu].activeItem]
+
+        activeSwitch.currentPosition = activeSwitch.currentPosition+1
+        if activeSwitch.currentPosition > #activeSwitch.values then 
+            activeSwitch.currentPosition = 1 
+        end
+
+        playNativeSound()
+
+        local actualSwitchIndex = activeSwitch.currentPosition
+        local actualSwitchValue = activeSwitch.values[tonumber(actualSwitchIndex)]
+
+        triggerEvent("onClientChangeNativeSwitch", activeSwitch.element, actualSwitchValue)
+    end
+end
+
+function nativeArrowLeft()
+    if not isNativeShown then return end
+    if #menus[activeMenu].items == 0 then return end
+    
+    if menus[activeMenu].items[menus[activeMenu].activeItem].type == "switch" then
+        local activeSwitch = menus[activeMenu].items[menus[activeMenu].activeItem]
+
+        activeSwitch.currentPosition = activeSwitch.currentPosition-1
+        if activeSwitch.currentPosition < 1 then 
+            activeSwitch.currentPosition = #activeSwitch.values 
+        end
+
+        playNativeSound()
+
+        local actualSwitchIndex = activeSwitch.currentPosition
+        local actualSwitchValue = activeSwitch.values[tonumber(actualSwitchIndex)]
+
+        triggerEvent("onClientChangeNativeSwitch", activeSwitch.element, actualSwitchValue)
+    end
+end
+
+function nativeEnter()
+    if not isNativeShown then return end
+    if #menus[activeMenu].items == 0 then return end
+
+    if menus[activeMenu].items[menus[activeMenu].activeItem].type == "switch" then
+        local activeItem = menus[activeMenu].items[menus[activeMenu].activeItem]
+        local actualSwitchIndex = activeItem.currentPosition
+        local actualSwitchValue = activeItem.values[tonumber(actualSwitchIndex)]
+        triggerEvent("onClientAcceptNativeSwitch", activeItem.element, actualSwitchValue)
+    elseif menus[activeMenu].items[menus[activeMenu].activeItem].type == "checkbox" then
+        menus[activeMenu].items[menus[activeMenu].activeItem].selected = not menus[activeMenu].items[menus[activeMenu].activeItem].selected
+        playNativeSound()
+        triggerEvent("onClientNativeCheckBoxChange", menus[activeMenu].items[menus[activeMenu].activeItem].element, menus[activeMenu].items[menus[activeMenu].activeItem].selected)
+    end
+end
+
+function unbindKeys()
+    unbindKey("arrow_d", "up", nativeArrowUp)
+    unbindKey("arrow_u", "up", nativeArrowDown)
+
+    unbindKey("arrow_r", "up", nativeArrowRight)
+    unbindKey("arrow_l", "up", nativeArrowLeft)
+
+    unbindKey("enter", "up", nativeEnter)
+end
+
 function bindKeys()
-    bindKey("arrow_d", "up", function()
-        if not isNativeShown then return end
-        if #menus[activeMenu].items+1 == 1 then return end
-        if activeItem+1 > #menus[activeMenu].items then
-            activeItem = 1
-        else
-            activeItem = activeItem+1
-        end
-        playNativeSound()
-    end)
-    bindKey("arrow_u", "up", function()
-        if not isNativeShown then return end
-        if #menus[activeMenu].items+1 == 0 then return end
-        if activeItem-1 < 1 then
-            activeItem = #menus[activeMenu].items
-        else
-            activeItem = activeItem-1
-        end
-        playNativeSound()
-    end)
-    bindKey("arrow_r", "up", function()
-        if not isNativeShown then return end
-        if #menus[activeMenu].items == 0 then return end
-        
-        if menus[activeMenu].items[activeItem].type == "switch" then
-            local activeSwitch = menus[activeMenu].items[activeItem]
+    unbindKeys()
+    bindKey("arrow_d", "up", nativeArrowUp)
+    bindKey("arrow_u", "up", nativeArrowDown)
 
-            activeSwitch.currentPosition = activeSwitch.currentPosition+1
-            if activeSwitch.currentPosition > #activeSwitch.values then 
-                activeSwitch.currentPosition = 1 
-            end
+    bindKey("arrow_r", "up", nativeArrowRight)
+    bindKey("arrow_l", "up", nativeArrowLeft)
 
-            playNativeSound()
-
-            local actualSwitchIndex = activeSwitch.currentPosition
-            local actualSwitchValue = activeSwitch.values[tonumber(actualSwitchIndex)]
-
-            triggerEvent("onClientChangeNativeSwitch", activeSwitch.element, actualSwitchValue)
-        end
-    end)
-
-    bindKey("arrow_l", "up", function()
-        if not isNativeShown then return end
-        if #menus[activeMenu].items == 0 then return end
-        
-        if menus[activeMenu].items[activeItem].type == "switch" then
-            local activeSwitch = menus[activeMenu].items[activeItem]
-
-            activeSwitch.currentPosition = activeSwitch.currentPosition-1
-            if activeSwitch.currentPosition < 1 then 
-                activeSwitch.currentPosition = #activeSwitch.values 
-            end
-
-            playNativeSound()
-
-            local actualSwitchIndex = activeSwitch.currentPosition
-            local actualSwitchValue = activeSwitch.values[tonumber(actualSwitchIndex)]
-
-            triggerEvent("onClientChangeNativeSwitch", activeSwitch.element, actualSwitchValue)
-        end
-    end)
-
-    bindKey("enter", "up", function()
-        if not isNativeShown then return end
-        if #menus[activeMenu].items == 0 then return end
-
-        if menus[activeMenu].items[activeItem].type == "switch" then
-            local activeItem = menus[activeMenu].items[activeItem]
-            local actualSwitchIndex = activeItem.currentPosition
-            local actualSwitchValue = activeItem.values[tonumber(actualSwitchIndex)]
-            triggerEvent("onClientAcceptNativeSwitch", activeItem.element, actualSwitchValue)
-        elseif menus[activeMenu].items[activeItem].type == "checkbox" then
-            menus[activeMenu].items[activeItem].selected = not menus[activeMenu].items[activeItem].selected
-            playNativeSound()
-            triggerEvent("onClientNativeCheckBoxChange", menus[activeMenu].items[activeItem].element, menus[activeMenu].items[activeItem].selected)
-        end
-    end)
+    bindKey("enter", "up", nativeEnter)
 end
 
 function getCurrentNativePage()
-    local currentPage = math.ceil(activeItem/menus[activeMenu].scroll_Items)
+    local currentPage = math.ceil(menus[activeMenu].activeItem/menus[activeMenu].scroll_Items)
     return currentPage
 end

@@ -6,6 +6,24 @@
   <script src="c_MTA-V-Native-UI.lua" type="client"/>
   <script src="s_MTA-V-Native-UI.lua" type="server"/>
   <script src="c_test.lua" type="client"/>
+
+  <export function="createNativeUI" type="client" />
+  <export function="setNativeMenuVisible" type="client" />
+  <export function="setNativeMenuActive" type="client" />
+  <export function="destroyNativeMenu" type="client" />
+
+  <export function="addNativeButton" type="client" />
+  <export function="setNativeButtonIcon" type="client" />
+  <export function="removeNativeButton" type="client" />
+
+  <export function="addNativeCheckbox" type="client" />
+  <export function="nativeSetCheckBoxSelection" type="client" />
+  <export function="nativeGetCheckBoxSelection" type="client" />
+
+  <export function="addNativeSwitch" type="client" />
+  <export function="getSwitchText" type="client" />
+  <export function="setNativeSwitchSelection" type="client" />
+  
   <file src="assets/fonts/SingPainter.ttf"/>
   <file src="assets/fonts/ChaletLondon.ttf"/>
   <file src="assets/24.png"/>
