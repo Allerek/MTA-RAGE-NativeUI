@@ -49,7 +49,7 @@ Parameters:
 - bool true/false(Visible/Invisibile)
 
   
-**getNativeMenuActive**
+**getNativeMenuVisible**
 
 Description:
 *This function will return true if the menu is visible and false if not*
