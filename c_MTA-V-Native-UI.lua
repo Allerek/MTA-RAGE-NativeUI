@@ -124,6 +124,16 @@ function setNativeMenuVisible(menuElement, visible)
     end
 end
 
+function getNativeMenuVisible(menuElement)
+   assert(isElement(menuElement), "Bad argument @ getNativeMenuVisible [expected native-menu at argument 1, got "..type(menuElement).." '"..tostring(menuElement).."'']")
+   assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1, got "..type(menuElement).." '"..tostring(menuElement).."'']")
+   for i, v in pairs(menus) do
+       if i == menuElement then
+	      return v.visible
+	   end
+   end
+end
+
 function setNativeMenuActive(menuElement)
     assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
     assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
