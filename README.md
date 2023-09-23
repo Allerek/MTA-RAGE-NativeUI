@@ -48,6 +48,16 @@ Parameters:
 - native-menu Native Menu element
 - bool true/false(Visible/Invisibile)
 
+  
+**getNativeMenuActive**
+
+Description:
+*This function will return true if the menu is visible and false if not*
+
+Parameters:
+
+- native-menu Native Menu element
+  
 **setNativeMenuActive**
 
 Description:
