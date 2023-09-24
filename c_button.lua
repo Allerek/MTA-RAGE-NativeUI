@@ -84,5 +84,10 @@ function removeNativeButton(menuElement, buttonElement)
             return true
         end
     end
+<<<<<<< HEAD
     return false
 end
+=======
+    return true
+end
+>>>>>>> 1eab7e216a8b28deb98a50ffe4ddc81998747a8b
