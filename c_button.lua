@@ -33,10 +33,9 @@ function setNativeButtonIcon(menuElement, buttonElement, icon)
     for i,v in pairs(menus[menuElement].items) do
         if v.element == buttonElement then
             v.icon = icon
-            return true
+            break
         end
     end
-    return false
 end
 
 
@@ -50,8 +49,8 @@ function removeNativeButton(menuElement, buttonElement)
     for i,v in pairs(menus[menuElement].items) do
         if v.element == buttonElement then
             table.remove(menus[menuElement].items, i)
-            return true
+            break
         end
     end
-    return false
+    return true
 end
