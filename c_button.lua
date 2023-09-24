@@ -40,6 +40,37 @@ function setNativeButtonIcon(menuElement, buttonElement, icon)
 end
 
 
+function setNativeButtonSelected(menuElement, buttonElement, state)
+    assert(isElement(menuElement), "Bad argument @ setNativeButtonSelected [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ setNativeButtonSelected [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+	
+	assert(isElement(buttonElement), "Bad argument @ setNativeButtonSelected [expected native-menu at argument 2,  got "..type(buttonElement).." '"..tostring(buttonElement).."'']")
+    assert(getElementType(buttonElement) == "native-button", "Bad argument @ setNativeButtonSelected [expected native-menu at argument 2,  got "..type(buttonElement).." '"..tostring(buttonElement).."'']")
+	
+	for i, v in pairs(menus[menuElement].items) do
+	    if v.element == buttonElement then
+		   v.selected = state
+		   break
+		end
+	end
+end
+
+
+function getNativeButtonSelected(menuElement, buttonElement)
+    assert(isElement(menuElement), "Bad argument @ setNativeButtonSelected [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ setNativeButtonSelected [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+	
+	assert(isElement(buttonElement), "Bad argument @ setNativeButtonSelected [expected native-menu at argument 2,  got "..type(buttonElement).." '"..tostring(buttonElement).."'']")
+    assert(getElementType(buttonElement) == "native-button", "Bad argument @ setNativeButtonSelected [expected native-menu at argument 2,  got "..type(buttonElement).." '"..tostring(buttonElement).."'']")
+	
+	for i, v in pairs(menus[menuElement].items) do
+	    if v.element == buttonElement then
+		   return v.selected
+		end
+	end
+end
+
+
 function removeNativeButton(menuElement, buttonElement)
     assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
     assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
@@ -53,5 +84,10 @@ function removeNativeButton(menuElement, buttonElement)
             return true
         end
     end
+<<<<<<< HEAD
     return false
 end
+=======
+    return true
+end
+>>>>>>> 1eab7e216a8b28deb98a50ffe4ddc81998747a8b
