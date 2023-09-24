@@ -57,6 +57,21 @@ Description:
 Parameters:
 
 - native-menu Native Menu element
+
+Example:
+```lua
+local NativeUI = exports.yourresource
+local menu = NativeUI:createNativeUI("Test", "Test", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+NativeUI:setNativeMenuVisible(menu, false)
+
+bindKey("m", "down", function()
+    if NativeUI:getNativeMenuVisible(menu) == false then
+       NativeUI:setNativeMenuVisible(menu, true)
+    elseif NativeUI:getNativeMenuVisible(menu) == true then
+       NativeUI:setNativeMenuVisible(menu, false)
+    end
+end)
+```
   
 **setNativeMenuActive**
 
@@ -93,6 +108,21 @@ Parameters:
 - native-button Native Button element
 - bool true/false
 
+Example:
+```lua
+local NativeUI = exports.yourresource
+local menu = NativeUI:createNativeUI("Test", "Test", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local button = NativeUI:addNativeButton(menu, "Button", tocolor(255,255,255), false)
+NativeUI:setNativeMenuVisible(menu, true)
+
+bindKey("m", "down", function()
+    local isVisible = NativeUI:getNativeMenuVisible(menu)
+    if isVisible == true then
+       NativeUI:setNativeButtonSelected(menu, button, true)
+    end
+end)
+```
+
 **getNativeButtonSelected (Added by Hydra45)**
 
 Description:
@@ -104,6 +134,28 @@ Parameters:
 - native-button Native Button element
 
 return true if the button is selected and false if not
+
+Example:
+```lua
+local NativeUI = exports.yourresource
+local menu = NativeUI:createNativeUI("Test", "Test", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local button = NativeUI:addNativeButton(menu, "Button", tocolor(255,255,255), false)
+NativeUI:setNativeMenuVisible(menu, true)
+NativeUI:setNativeButtonSelected(menu, button, true)
+
+bindKey("m", "down", function()
+    local isVisible = NativeUI:getNativeMenuVisible(menu)
+    if isVisible == true then
+       if NativeUI:getNativeButtonSelected(menu, button) == true then
+          NativeUI:setNativeButtonSelected(menu, button, false)
+          iprint("Button is now unselected")
+       elseif NativeUI:getNativeButtonSelected(menu, button) == false then
+          NativeUI:setNativeButtonSelected(menu, button, true)
+          iprint("Button is now selected")
+       end
+    end
+end)
+```
 
 **setNativeButtonIcon**
 
