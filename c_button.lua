@@ -38,6 +38,7 @@ function setNativeButtonIcon(menuElement, buttonElement, icon)
     end
 end
 
+
 function setNativeButtonSelected(menuElement, buttonElement, state)
     assert(isElement(menuElement), "Bad argument @ setNativeButtonSelected [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
     assert(getElementType(menuElement) == "native-menu", "Bad argument @ setNativeButtonSelected [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
@@ -67,6 +68,7 @@ function getNativeButtonSelected(menuElement, buttonElement)
 		end
 	end
 end
+
 
 function removeNativeButton(menuElement, buttonElement)
     assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
