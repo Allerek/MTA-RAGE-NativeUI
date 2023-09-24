@@ -57,6 +57,17 @@ Parameters:
 
 - native-menu Native Menu element
 
+**destroyNativeItem**
+
+Description:
+
+*This function will destroy given item*
+
+Parameters:
+
+ - native-menu Native Menu element
+ - native-button/native-checkbox/native-switch Native Item element
+
 ## Button
 **addNativeButton**
 
@@ -147,7 +158,7 @@ Parameters:
 
 returns native-checkbox element
 
-**nativeSetCheckBoxSelection**
+**setNativeSwitchSelection**
 
 Description:
 *This function will set Native Checkbox selected/unselected*
@@ -159,7 +170,7 @@ Parameters:
 - bool True/False if checkbox is selected(checked)
 
 
-**nativeGetCheckBoxSelection**
+**getNativeSwitchSelection**
 
 Description:
 *This function will get Native Checkbox selected/unselected*

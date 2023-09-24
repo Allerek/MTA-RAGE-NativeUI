@@ -11,7 +11,7 @@
   <export function="setNativeMenuVisible" type="client" />
   <export function="setNativeMenuActive" type="client" />
   <export function="destroyNativeMenu" type="client" />
-  <export function="removeNativeItem" type="client" />
+  <export function="destroyNativeItem" type="client" />
 
   <export function="addNativeButton" type="client" />
   <export function="setNativeButtonIcon" type="client" />

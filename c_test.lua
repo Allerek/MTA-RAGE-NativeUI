@@ -37,8 +37,8 @@ print("[NATIVE-TEST] getSwitchText: "..getSwitchText(menu, switch))
 print("[NATIVE-TEST] setNativeSwitchSelection: "..tostring(setNativeSwitchSelection(menu, switch, 2)))
 print("[NATIVE-TEST] setNativeSwitchSelection(2): "..tostring(setNativeSwitchSelection(menu, switch, "Ketchup")))
 
-print("[NATIVE-TEST] nativeSetCheckBoxSelection: "..tostring(nativeSetCheckBoxSelection(menu, checkbox, true)))
-print("[NATIVE-TEST] nativeGetCheckBoxSelection: "..tostring(nativeGetCheckBoxSelection(menu, checkbox)))
+print("[NATIVE-TEST] setNativeCheckboxSelection: "..tostring(setNativeCheckboxSelection(menu, checkbox, true)))
+print("[NATIVE-TEST] getNativeCheckboxSelection: "..tostring(getNativeCheckboxSelection(menu, checkbox)))
 
 addEventHandler("onClientAcceptNativeSwitch", getRootElement(), function(value)
     print("[NATIVE-TEST] onClientAcceptNativeSwitch: "..value)

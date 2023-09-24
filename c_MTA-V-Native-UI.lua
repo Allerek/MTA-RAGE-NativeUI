@@ -368,7 +368,7 @@ function getCurrentNativePage()
     return currentPage
 end
 
-function removeNativeItem(menuElement, nativeElement)
+function destroyNativeItem(menuElement, nativeElement)
     assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
     assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
 
