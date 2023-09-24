@@ -49,7 +49,7 @@ Parameters:
 - bool true/false(Visible/Invisibile)
 
   
-**getNativeMenuVisible**
+**getNativeMenuVisible (Added by Hydra45)**
 
 Description:
 *This function will return true if the menu is visible and false if not*
@@ -81,6 +81,29 @@ Parameters:
 - string Icon(all possible in assets/icons/), do not include a number on the end of the name(f.e "clothing", check test.lua)
 
 returns native-button element
+
+**setNativeButtonSelected (Added by Hydra45)**
+
+Description:
+*This function will make a button from a respective menu to be selected or not*
+
+Parameters:
+
+- native-menu Native Menu element
+- native-button Native Button element
+- bool true/false
+
+**getNativeButtonSelected (Added by Hydra45)**
+
+Description:
+*This function will check if a button from a respective menu is selected or not*
+
+Parameters:
+
+- native-menu Native Menu element
+- native-button Native Button element
+
+return true if the button is selected and false if not
 
 **setNativeButtonIcon**
 
