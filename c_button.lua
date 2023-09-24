@@ -33,23 +33,9 @@ function setNativeButtonIcon(menuElement, buttonElement, icon)
     for i,v in pairs(menus[menuElement].items) do
         if v.element == buttonElement then
             v.icon = icon
-            break
+            return true
         end
     end
+    return false
 end
 
-function removeNativeButton(menuElement, buttonElement)
-    assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
-    assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
-
-    assert(isElement(buttonElement), "Bad argument @ removeNativeButton [expected native-menu at argument 2,  got "..type(buttonElement).." '"..tostring(buttonElement).."'']")
-    assert(getElementType(buttonElement) == "native-button", "Bad argument @ removeNativeButton [expected native-menu at argument 2,  got "..type(buttonElement).." '"..tostring(buttonElement).."'']")
-
-    for i,v in pairs(menus[menuElement].items) do
-        if v.element == buttonElement then
-            table.remove(menus[menuElement].items, i)
-            break
-        end
-    end
-    return true
-end

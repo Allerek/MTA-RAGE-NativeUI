@@ -18,13 +18,12 @@ function addNativeCheckbox(menuElement, text, color, selected)
     return checkbox
 end
 
+function setNativeCheckboxSelection(menuElement, checkboxElement, newState)
+    assert(isElement(menuElement), "Bad argument @ setNativeCheckboxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ setNativeCheckboxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
 
-function nativeSetCheckBoxSelection(menuElement, checkboxElement, newState)
-    assert(isElement(menuElement), "Bad argument @ nativeSetCheckBoxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
-    assert(getElementType(menuElement) == "native-menu", "Bad argument @ nativeSetCheckBoxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
-
-    assert(isElement(checkboxElement), "Bad argument @ nativeSetCheckBoxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
-    assert(getElementType(checkboxElement) == "native-checkbox", "Bad argument @ nativeSetCheckBoxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
+    assert(isElement(checkboxElement), "Bad argument @ setNativeCheckboxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
+    assert(getElementType(checkboxElement) == "native-checkbox", "Bad argument @ setNativeCheckboxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
     
     for i,v in pairs(menus[menuElement].items) do
         if v.element == checkboxElement then
@@ -32,19 +31,21 @@ function nativeSetCheckBoxSelection(menuElement, checkboxElement, newState)
             return true
         end
     end
+    return false
 end
 
-
-function nativeGetCheckBoxSelection(menuElement, checkboxElement)
-    assert(isElement(menuElement), "Bad argument @ nativeGetCheckBoxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+function getNativeCheckboxSelection(menuElement, checkboxElement)
+    assert(isElement(menuElement), "Bad argument @ getNativeCheckboxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
     assert(getElementType(menuElement) == "native-menu", "Bad argument @ nativeGetCheckBoxSelection [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
 
-    assert(isElement(checkboxElement), "Bad argument @ nativeGetCheckBoxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
-    assert(getElementType(checkboxElement) == "native-checkbox", "Bad argument @ nativeGetCheckBoxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
+    assert(isElement(checkboxElement), "Bad argument @ getNativeCheckboxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
+    assert(getElementType(checkboxElement) == "native-checkbox", "Bad argument @ getNativeCheckboxSelection [expected native-checkbox at argument 2,  got "..type(checkboxElement).." '"..tostring(checkboxElement).."'']")
     
     for i,v in pairs(menus[menuElement].items) do
         if v.element == checkboxElement then
             return v.selected
         end
     end
+    return false
 end
+

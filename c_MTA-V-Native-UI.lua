@@ -367,3 +367,19 @@ function getCurrentNativePage()
     local currentPage = math.ceil(menus[activeMenu].activeItem/menus[activeMenu].scroll_Items)
     return currentPage
 end
+
+function removeNativeItem(menuElement, nativeElement)
+    assert(isElement(menuElement), "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")
+    assert(getElementType(menuElement) == "native-menu", "Bad argument @ removeNativeButton [expected native-menu at argument 1,  got "..type(menuElement).." '"..tostring(menuElement).."'']")    
+
+    assert(isElement(nativeElement), "Bad argument @ removeNativeButton [expected native-menu at argument 2,  got "..type(nativeElement).." '"..tostring(nativeElement).."'']")
+    assert(getElementType(nativeElement) == "native-button" or getElementType(nativeElement) == "native-switch" or getElementType(nativeElement) == "native-checkbox", "Bad argument @ removeNativeButton [expected native-menu at argument 2,  got "..type(nativeElement).." '"..tostring(nativeElement).."'']")
+
+    for i,v in pairs(menus[menuElement].items) do
+        if v.element == buttonElement then
+            table.remove(menus[menuElement].items, i)
+            break
+        end
+    end
+    return true
+end

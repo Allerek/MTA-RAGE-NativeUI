@@ -37,7 +37,6 @@ function getSwitchText(menuElement, switchElement)
             return actualSwitchValue
         end
     end
-
     return false
 end
 
