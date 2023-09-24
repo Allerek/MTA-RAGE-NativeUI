@@ -7,13 +7,8 @@ local test_icons = {
     "barber",
 }
 
-local menu = createNativeUI("Test", "Test2", "assets/24.png", false, tocolor(0,0,0), tocolor(255,255,255), "center", false)
+local menu = createNativeUI("Test", "Test2", "assets/24.png", false, tocolor(0,0,0), tocolor(255,255,255), "center", true)
 local menu2 = createNativeUI("Test", "Test2", "assets/24.png", false, tocolor(0,0,0), tocolor(255,255,255), "left", true)
-
-bindKey("u", "down", function()
-        iprint(getNativeMenuVisible(menu))
-        iprint(getNativeMenuVisible(menu2))
-    end)
 
 math.randomseed(os.time())
 for i=1,15 do
