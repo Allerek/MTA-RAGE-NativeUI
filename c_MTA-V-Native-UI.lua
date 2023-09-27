@@ -14,7 +14,7 @@ activeMenu = false
 local activeItem =  1
 
 local sW,sH = guiGetScreenSize()
-local scale = 1920/sW
+local scale = sW/1920
 local testTXT = dxCreateTexture("assets/defaultbg.png")
 
 local GUI = {}
