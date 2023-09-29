@@ -29,6 +29,12 @@ Parameters:
 
 returns native-menu element
 
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+```
+
 **destroyNativeMenu**
 
 Description:
@@ -37,6 +43,16 @@ Description:
 Parameters:
 
 - native-menu Native Menu element
+
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+
+addCommandHandler("destroymenu", function()
+    NativeUI:destroyNativeMenu(menu)
+end)
+```
 
 **setNativeMenuVisible**
 
@@ -48,27 +64,19 @@ Parameters:
 - native-menu Native Menu element
 - bool true/false(Visible/Invisibile)
 
-  
-**getNativeMenuVisible (Added by Hydra45)**
-
-Description:
-*This function will return true if the menu is visible and false if not*
-
-Parameters:
-
-- native-menu Native Menu element
-
 Example:
 ```lua
-local NativeUI = exports.yourresource
-local menu = NativeUI:createNativeUI("Test", "Test", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
 NativeUI:setNativeMenuVisible(menu, false)
 
-bindKey("m", "down", function()
-    if NativeUI:getNativeMenuVisible(menu) == false then
-       NativeUI:setNativeMenuVisible(menu, true)
-    elseif NativeUI:getNativeMenuVisible(menu) == true then
-       NativeUI:setNativeMenuVisible(menu, false)
+addCommandHandler("showmenu", function()
+    if not state then
+       state = true
+       NativeUI:setNativeMenuVisible(menu, state)
+    else
+       state = false
+       NativeUI:setNativeMenuVisible(menu, state)
     end
 end)
 ```
@@ -81,6 +89,24 @@ Description:
 Parameters:
 
 - native-menu Native Menu element
+
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local menu2 = NativeUI:createNativeUI("NativeUI #2", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "right", true)
+NativeUI:setNativeMenuActive(menu)
+
+addCommandHandler("menuactivity", function()
+    if not state then
+       state = true
+       NativeUI:setNativeMenuActive(menu2)
+    else
+       state = false
+       NativeUI:setNativeMenuActive(menu)
+    end
+end)
+```
 
 ## Button
 **addNativeButton**
@@ -97,64 +123,11 @@ Parameters:
 
 returns native-button element
 
-**setNativeButtonSelected (Added by Hydra45)**
-
-Description:
-*This function will make a button from a respective menu to be selected or not*
-
-Parameters:
-
-- native-menu Native Menu element
-- native-button Native Button element
-- bool true/false
-
 Example:
 ```lua
-local NativeUI = exports.yourresource
-local menu = NativeUI:createNativeUI("Test", "Test", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
-local button = NativeUI:addNativeButton(menu, "Button", tocolor(255,255,255), false)
-NativeUI:setNativeMenuVisible(menu, true)
-
-bindKey("m", "down", function()
-    local isVisible = NativeUI:getNativeMenuVisible(menu)
-    if isVisible == true then
-       NativeUI:setNativeButtonSelected(menu, button, true)
-    end
-end)
-```
-
-**getNativeButtonSelected (Added by Hydra45)**
-
-Description:
-*This function will check if a button from a respective menu is selected or not*
-
-Parameters:
-
-- native-menu Native Menu element
-- native-button Native Button element
-
-return true if the button is selected and false if not
-
-Example:
-```lua
-local NativeUI = exports.yourresource
-local menu = NativeUI:createNativeUI("Test", "Test", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
-local button = NativeUI:addNativeButton(menu, "Button", tocolor(255,255,255), false)
-NativeUI:setNativeMenuVisible(menu, true)
-NativeUI:setNativeButtonSelected(menu, button, true)
-
-bindKey("m", "down", function()
-    local isVisible = NativeUI:getNativeMenuVisible(menu)
-    if isVisible == true then
-       if NativeUI:getNativeButtonSelected(menu, button) == true then
-          NativeUI:setNativeButtonSelected(menu, button, false)
-          iprint("Button is now unselected")
-       elseif NativeUI:getNativeButtonSelected(menu, button) == false then
-          NativeUI:setNativeButtonSelected(menu, button, true)
-          iprint("Button is now selected")
-       end
-    end
-end)
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local button = NativeUI:addNativeButton(menu, "Ketchup", tocolor(255,255,255), false)
 ```
 
 **setNativeButtonIcon**
@@ -168,6 +141,14 @@ Parameters:
 - native-button Native Button element
 - string Icon(all possible in assets/icons/), do not include a number on the end of the name(f.e "clothing", check test.lua)
 
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local button = NativeUI:addNativeButton(menu, "Ketchup", tocolor(255,255,255), false)
+NativeUI:setNativeButtonIcon(menu, button, "clothing")
+```
+
 **removeNativeButton**
 
 Description:
@@ -177,6 +158,17 @@ Parameters:
 
 - native-menu Native Menu element
 - native-button Native Button element
+
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local button = NativeUI:addNativeButton(menu, "Ketchup", tocolor(255,255,255), false)
+
+addCommandHandler("removebutton", function()
+    NativeUI:removeNativeButton(menu, button)
+end)
+```
 
 ## Switch
 **addNativeSwitch**
@@ -193,6 +185,21 @@ Parameters:
 
 returns native-switch element
 
+Example:
+```lua
+#Version 1
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local switch = NativeUI:addNaitveSwitch(menu, "Inventory", tocolor(255,255,255), {"Ketchup", "Mustard", "Apple"})
+
+#Version 2
+local inventory = {"Ketchup", "Mustard", "Apple"}
+
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local switch = NativeUI:addNaitveSwitch(menu, "Inventory", tocolor(255,255,255), inventory)
+```
+
 **getSwitchText**
 
 Description:
@@ -205,6 +212,21 @@ Parameters:
 
 returns native-switch current text
 
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local switch = NativeUI:addNaitveSwitch(menu, "Inventory", tocolor(255,255,255), {"Ketchup", "Mustard"})
+
+addCommandHandler("checktext", function()
+    if NativeUI:getSwitchText(menu, switch) == "Ketchup" then
+       iprint("Indeed you have ketchup on your hot dog")
+    elseif NativeUI:getSwitchText(menu, switch) == "Mustard" then
+       iprint("Now you have mustard too")
+    end
+end)
+```
+
 **setNativeSwitchSelection**
 
 Description:
@@ -215,6 +237,23 @@ Parameters:
 - native-menu Native Menu element
 - native-switch Native Switch Element
 - number/string New Native Switch Selection
+
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local switch = NativeUI:addNaitveSwitch(menu, "Inventory", tocolor(255,255,255), {"Ketchup", "Mustard"})
+
+addCommandHandler("changeswitch", function()
+    if not item then
+       item = "Mustard"
+       NativeUI:setNativeSwitchSelection(menu, switch, item)
+    else
+       item = "Ketchup"
+       NativeUI:setNativeSwitchSelection(menu, switch, item)
+    end
+end)
+```
 
 ## Checkbox
 
@@ -232,6 +271,13 @@ Parameters:
 
 returns native-checkbox element
 
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local checkbox = NativeUI:addNativeCheckbox(menu, "Dance", tocolor(255,255,255), false)
+```
+
 **nativeSetCheckBoxSelection**
 
 Description:
@@ -243,6 +289,13 @@ Parameters:
 - native-checkbox Native Checkbox element
 - bool True/False if checkbox is selected(checked)
 
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local checkbox = NativeUI:addNativeCheckbox(menu, "Dance", tocolor(255,255,255), false)
+NativeUI:nativeSetCheckBoxSelection(menu, checkbox, true)
+```
 
 **nativeGetCheckBoxSelection**
 
@@ -254,4 +307,18 @@ Parameters:
 - native-menu Native Menu element
 - native-checkbox Native Checkbox element
 
+Example:
+```lua
+local NativeUI = exports.MTA-RAGE-NativeUI
+local menu = NativeUI:createNativeUI("NativeUI", "Menu Example:", "assets/defaultbg.png", false, tocolor(255,255,255), tocolor(255,255,255), "left", true)
+local checkbox = NativeUI:addNativeCheckbox(menu, "Dance", tocolor(255,255,255), false)
+NativeUI:nativeSetCheckBoxSelection(menu, checkbox, true)
 
+addCommandHandler("checkbox", function()
+    if NativeUI:nativeGetCheckBoxSelection(menu, checkbox) == true then
+       NativeUI:nativeSetCheckBoxSelection(menu, checkbox, false)
+    elseif NativeUI:nativeGetCheckBoxSelection(menu, checkbox) == false then
+       NativeUI:nativeSetCheckBoxSelection(menu, checkbox, true)
+    end
+end)
+```
