@@ -339,7 +339,7 @@ function nativeEnter()
         menus[activeMenu].items[menus[activeMenu].activeItem].selected = not menus[activeMenu].items[menus[activeMenu].activeItem].selected
         playNativeSound()
         triggerEvent("onClientNativeCheckBoxChange", menus[activeMenu].items[menus[activeMenu].activeItem].element, menus[activeMenu].items[menus[activeMenu].activeItem].selected)
-    elseif menus[activeMenu].items[menus[activeMenu].activeItem].type == "checkbox" then
+    elseif menus[activeMenu].items[menus[activeMenu].activeItem].type == "button" then
         playNativeSound()
         triggerEvent("onClientAcceptButton", activeItem.element)
     end
