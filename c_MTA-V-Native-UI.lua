@@ -329,7 +329,7 @@ end
 function nativeEnter()
     if not isNativeShown then return end
     if #menus[activeMenu].items == 0 then return end
-
+    
     if menus[activeMenu].items[menus[activeMenu].activeItem].type == "switch" then
         local activeItem = menus[activeMenu].items[menus[activeMenu].activeItem]
         local actualSwitchIndex = activeItem.currentPosition
@@ -339,6 +339,9 @@ function nativeEnter()
         menus[activeMenu].items[menus[activeMenu].activeItem].selected = not menus[activeMenu].items[menus[activeMenu].activeItem].selected
         playNativeSound()
         triggerEvent("onClientNativeCheckBoxChange", menus[activeMenu].items[menus[activeMenu].activeItem].element, menus[activeMenu].items[menus[activeMenu].activeItem].selected)
+    elseif menus[activeMenu].items[menus[activeMenu].activeItem].type == "checkbox" then
+        playNativeSound()
+        triggerEvent("onClientAcceptButton", activeItem.element)
     end
 end
 
